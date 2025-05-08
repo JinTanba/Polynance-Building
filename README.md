@@ -8,7 +8,7 @@ As an aggregation layer, **Polynance** recognizes this opportunity and is buildi
 
 # 🔨⏳ Now Building Idea
 
-## ERC-20 & Contextual Transformations 🔄
+## ERC-20 & index token 🔄
   Enable transforming Polymarket’s CTF tokens into the optimal form for any context.
   > https://github.com/JinTanba/Polynance-Building/tree/main/src/ctf-index
 ## Tranches (PT/YT) 🌗
