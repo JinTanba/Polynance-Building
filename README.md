@@ -1,66 +1,21 @@
-## Foundry
+# Polynance Contract Book 📦
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+## 🚀 Overview
 
-Foundry consists of:
+Prediction markets haven’t tapped into Ethereum’s full composability nor captured the vast liquidity flowing through DeFi. Challenges like CLOB design, ERC-1155 position tokens, volatility management, and price oracles remain—but all are solvable. Bridging prediction markets with other DeFi protocols unlocks immense potential.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+As an aggregation layer, **Polynance** recognizes this opportunity and is building several modules on Polymarket. Serving as a gateway, Polynance will funnel more capital and betting activity into Polymarket.
 
-## Documentation
+# 🔨 Now Building
 
-https://book.getfoundry.sh/
+## ERC-20 & Contextual Transformations 🔄
+  Enable transforming Polymarket’s CTF tokens into the optimal form for any context.
 
-## Usage
+## Tranches (PT/YT) 🌗
+  Principal-/Yield-token split for Polymarket indices (think Pendle-style).
 
-### Build
+## Lending 💰
+  Deep Aave integration to deliver yields above Aave’s base rates and enable leveraged betting beyond users’ deposited capital.
 
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+## Payment 💳
+  Predict now, Pay Never!!
