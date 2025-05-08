@@ -4,19 +4,22 @@ pragma solidity ^0.8.24;
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
-import {VaultStorage} from "./libs/VaultStorage.sol";
+import {VaultStorage} from "../libs/VaultStorage.sol";
 import {NonfungiblePredictionManager} from "./NonfungiblePredictionManager.sol";
-import {VaultEE} from "./libs/VaultEE.sol";
-import {AaveLibrary} from "./libs/AaveLibs.sol";
-import {VaultLogic} from "./libs/VaultLogic.sol";
-import {CTFIndexFactory} from "./CTFIndexFactory.sol";
-import {CTFIndexToken} from "./CTFIndex.sol";
+import {VaultEE} from "../libs/VaultEE.sol";
+import {AaveLibrary} from "../libs/AaveLibs.sol";
+import {VaultLogic} from "../libs/VaultLogic.sol";
 
 contract Polyaave is ReentrancyGuard {
     using SafeERC20 for IERC20;
 
     modifier onlyQuoteOwner(uint256 qid) {
         if(VaultStorage.$$().npm.ownerOf(qid) != msg.sender) revert VaultEE.NotOwner();
+        _;
+    }
+
+    modifier onlyStrategy() {
+        if(!VaultStorage.$$().approvedstrategy[msg.sender]) revert VaultEE.NotStrategy();
         _;
     }
 

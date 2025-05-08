@@ -10,8 +10,8 @@ import { Strings } from "@openzeppelin/contracts/utils/Strings.sol";
 import { Base64 } from "@openzeppelin/contracts/utils/Base64.sol";
 
 /* ───── project-local deps ─────────────────────────────────────────────── */
-import { PositionKeyLib } from "./libs/PositionKeyLib.sol";
-import { VaultEE }  from "./interfaces/SuperInterface.sol";
+import { PositionKeyLib } from "../libs/PositionKeyLib.sol";
+import { VaultEE }  from "../interfaces/SuperInterface.sol";
 
 /* ───── reader interface to CoreVault ──────────────────────────────────── */
 interface ICoreVaultReader {
