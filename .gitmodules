@@ -10,3 +10,6 @@
 [submodule "lib/conditional-tokens-market-makers"]
 	path = lib/conditional-tokens-market-makers
 	url = https://github.com/gnosis/conditional-tokens-market-makers
+[submodule "lib/aave-v3-core"]
+	path = lib/aave-v3-core
+	url = https://github.com/aave/aave-v3-core
