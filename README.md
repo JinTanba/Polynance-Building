@@ -7,9 +7,8 @@ Prediction markets haven’t tapped into Ethereum’s full composability nor cap
 As an aggregation layer, **Polynance** recognizes this opportunity and is building several modules on Polymarket. Serving as a gateway, Polynance will funnel more capital and betting activity into Polymarket.
 
 
-### 🧭 After countless detours, we reached a clear conclusion: indexing position tokens is the key that opens the way forward.
-### 📊 Bundle the positions and mint index tokens!
-
+** 🧭 After countless twists and turns, we discovered that bundling position tokens into index assets is the real unlock. **
+** 🪙 This move gives prediction-market assets tangible heft within DeFi, flips their quirks into pure appeal—and the UX is downright fun! **
 
 # 🔨⏳ Now Building Idea
 
