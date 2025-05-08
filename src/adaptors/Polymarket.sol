@@ -4,8 +4,8 @@ pragma solidity ^0.8.24;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
-import {IConditionalTokens} from "./interfaces/IConditionalTokens.sol";
-import {CTFIndexFactory} from "./CTFIndexFactory.sol";
+import {IConditionalTokens} from "../interfaces/IConditionalTokens.sol";
+import {CTFIndexFactory} from "../ctf-index/CTFIndexFactory.sol";
 // @dev
 // Invariant conditions:
 // 1. If the set of positionids is the same, and the metadata and ctf addresses are the same, calculate the same indextoken.

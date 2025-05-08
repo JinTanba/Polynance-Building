@@ -18,10 +18,10 @@ contract Polyaave is ReentrancyGuard {
         _;
     }
 
-    modifier onlyStrategy() {
-        if(!VaultStorage.$$().approvedstrategy[msg.sender]) revert VaultEE.NotStrategy();
-        _;
-    }
+    // modifier onlyStrategy() {
+    //     if(!VaultStorage.$$().approvedstrategy[msg.sender]) revert VaultEE.NotStrategy();
+    //     _;
+    // }
 
     constructor(address usdc) {
         VaultStorage.$ storage $ = VaultStorage.$$();

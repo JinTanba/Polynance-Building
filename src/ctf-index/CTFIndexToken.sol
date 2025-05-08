@@ -88,6 +88,21 @@ contract CTFIndexToken is ERC20, IERC1155Receiver {
         ctf.safeBatchTransferFrom(address(this), msg.sender, ids, amts, "");
     }
 
+    function burnAndRedeem(uint256 amount) external {
+        _burn(msg.sender, amount);
+        uint256 len = _indexSets.length;
+        uint256 beforeCollateralBalance = IERC20(collateral).balanceOf(address(this));
+        unchecked {
+            for (uint256 i = 0; i < len; ++i) {
+                uint256[] memory ids = new uint256[](1);
+                ids[0] = _indexSets[i];
+                ctf.redeemPositions(collateral, bytes32(0), _conditionIds[i], ids);
+            }
+        }
+        uint256 redeemedCollateral = IERC20(collateral).balanceOf(address(this)) - beforeCollateralBalance;
+        IERC20(collateral).transfer(msg.sender, redeemedCollateral);
+    }
+
     function getIndexSets() external view returns (uint256[] memory) {
         return _indexSets;
     }

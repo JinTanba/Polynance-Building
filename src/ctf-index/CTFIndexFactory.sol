@@ -6,13 +6,14 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import {IConditionalTokens} from "../interfaces/IConditionalTokens.sol";
-import {CTFIndexToken} from "./CTFIndex.sol";
+import {CTFIndexToken} from "./CTFIndexToken.sol";
 
 // @dev
 // Invariant conditions:
 // 1. If the set of positionids is the same, and the metadata and ctf addresses are the same, calculate the same indextoken.
 // 2. An indextoken is issued and can be withdrawn in a 1:1 ratio with the position token it contains.
 // 3. An indextoken cannot have two or more positions under the same conditionid.
+
 contract CTFIndexFactory {
 
     event IndexCreated(
@@ -32,6 +33,7 @@ contract CTFIndexFactory {
     error InvalidIndexSet();
     error IndexAlreadyExists();
     error InvalidCondition();
+    error DuplicateCondition();
 
     constructor(address _ctf, address _collateral) {
         ctf = IConditionalTokens(_ctf);
@@ -44,15 +46,15 @@ contract CTFIndexFactory {
         bytes calldata metadata
     ) external returns (address index) {
 
-        (, , 
+        (
             bytes32 salt, 
-            string memory name, 
-            string memory symbol,
             bytes memory initCode
         ) = _preparePosition(conditionIds, indexSets, metadata);
 
+        _validatePosition(conditionIds, indexSets);
 
-        predicted = address(
+
+        address predicted = address(
             uint160(uint256(
             keccak256(
                 abi.encodePacked(
@@ -61,7 +63,7 @@ contract CTFIndexFactory {
             )
         )));
 
-        if(predicted.code.length != 0) revert IndexAlreadyExists();
+        if(predicted.code.length != 0) return predicted;
 
         //CREATE2 deploy
         assembly {
@@ -89,13 +91,7 @@ contract CTFIndexFactory {
         bytes calldata metadata
     ) external view returns (address predicted) {
 
-        (, , 
-            bytes32 salt, 
-            string memory name, 
-            string memory symbol,
-            bytes memory initCode
-        ) = _preparePosition(conditionIds, indexSets, metadata);
-
+        (bytes32 salt, bytes memory initCode) = _preparePosition(conditionIds, indexSets, metadata);
 
         predicted = address(
             uint160(uint256(
@@ -113,15 +109,12 @@ contract CTFIndexFactory {
         bytes calldata metadata
     )
         internal
-        view
+        pure
         returns (
             bytes32 salt,
-            string memory name,
-            string memory symbol,
             bytes memory initCode
         )
     {
-            bytes32 salt;
             unchecked {
                 for (uint256 i; i < conditionIds.length; ++i) {
                     salt ^= keccak256(abi.encodePacked(conditionIds[i], indexSets[i]));
@@ -131,12 +124,27 @@ contract CTFIndexFactory {
             }
 
             string memory suffix = Strings.toHexString(uint256(salt));
-            name= string(abi.encodePacked("CTFIndex-", suffix));
-            symbol = string(abi.encodePacked("CTFI.",suffix));
+            string memory name = string(abi.encodePacked("CTFIndex-", suffix));
+            string memory symbol = string(abi.encodePacked("CTFI.",suffix));
             initCode = abi.encodePacked(
                 type(CTFIndexToken).creationCode,
                 abi.encode(name, symbol)            // constructor args
             );
+    }
+
+    function _validatePosition(
+        bytes32[] calldata conditionIds,
+        uint256[] calldata indexSets
+    ) internal view {
+        for(uint256 i; i < conditionIds.length; ++i) {
+            uint256 slots = ctf.getOutcomeSlotCount(conditionIds[i]);
+            if(slots == 0) revert InvalidCondition();
+            if (indexSets[i] == 0 || indexSets[i] >= (1 << slots)) revert InvalidIndexSet();
+            for(uint256 j; j < conditionIds.length; ++j) {
+                if(i == j) continue;
+                if(conditionIds[i] == conditionIds[j]) revert DuplicateCondition();
+            }
+        }
     }
 
 }
