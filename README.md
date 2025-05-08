@@ -1,4 +1,4 @@
-# Polynance Contract Book 📦
+# Polynance Contract 📦
 
 ## 🚀 Overview
 
